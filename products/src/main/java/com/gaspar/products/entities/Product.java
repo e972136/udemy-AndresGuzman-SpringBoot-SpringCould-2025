@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,6 +25,9 @@ public class Product {
     private String name;
 
     private BigDecimal price;
+
+    @Transient
+    private String port;
 
     @Column(name="create_at")
     private LocalDate createAt;

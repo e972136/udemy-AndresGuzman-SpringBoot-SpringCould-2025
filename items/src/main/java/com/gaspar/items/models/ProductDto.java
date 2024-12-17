@@ -7,6 +7,7 @@ public record ProductDto(
     Long id,
     String name,
     BigDecimal price,
+    String port,
     LocalDate createAt
 ) {
 
