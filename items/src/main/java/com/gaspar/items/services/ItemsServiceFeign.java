@@ -10,6 +10,8 @@ import com.gaspar.items.clients.ProductFeignClient;
 import com.gaspar.items.models.Item;
 import com.gaspar.items.models.ProductDto;
 
+import feign.FeignException;
+
 @Service
 public class ItemsServiceFeign implements ItemService{
 
@@ -28,14 +30,16 @@ public class ItemsServiceFeign implements ItemService{
     }
 
     @Override
-    public Optional<Item> findById(Long id) {
-        ProductDto byId = feignClient.getById(id);
-        if(isNull(byId)){
-            return Optional.empty();
-        }
-        return Optional.of(
-            new Item(byId,1) 
+    public Optional<Item> findById(Long id, Integer qty) {
+
+        try {
+             ProductDto byId = feignClient.getById(id); 
+             return Optional.of(
+            new Item(byId,qty) 
             ) ;
+        } catch (FeignException e) {
+            return Optional.empty();
+        }       
     }
 
 }

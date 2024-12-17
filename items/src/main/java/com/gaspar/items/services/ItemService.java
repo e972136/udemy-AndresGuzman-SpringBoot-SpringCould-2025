@@ -7,5 +7,5 @@ import com.gaspar.items.models.Item;
 
 public interface ItemService {
     List<Item> findAll();
-    Optional<Item> findById(Long id);
+    Optional<Item> findById(Long id, Integer qty);
 }

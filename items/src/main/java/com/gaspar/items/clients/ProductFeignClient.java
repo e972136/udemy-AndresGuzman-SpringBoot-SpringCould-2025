@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.gaspar.items.models.ProductDto;
 
-@FeignClient(url = "localhost:9090/api/products")
+@FeignClient(url = "localhost:9090/api/products",name = "products")
 public interface ProductFeignClient {
     @GetMapping
     List<ProductDto> findAll();

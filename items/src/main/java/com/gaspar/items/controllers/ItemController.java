@@ -3,6 +3,7 @@ package com.gaspar.items.controllers;
 import static java.util.Objects.isNull;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
@@ -26,13 +27,15 @@ public class ItemController {
         return itemService.findAll();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Item> byId(
-        @PathVariable Long id
-    ){
-        Optional<Item> byId = itemService.findById(id);
-        if(isNull(byId)){
-            return ResponseEntity.notFound().build();
+    @GetMapping("/{id}/{qty}")
+    public ResponseEntity<?> byId(
+        @PathVariable Long id,
+        @PathVariable Integer qty
+    ){        
+        Optional<Item> byId = itemService.findById(id,qty);
+        if(byId.isEmpty()){
+            //return ResponseEntity.notFound().build();
+            return ResponseEntity.status(404).body(Map.of("message","Not Found"));
         }
         return ResponseEntity.ok(byId.get());
     }
