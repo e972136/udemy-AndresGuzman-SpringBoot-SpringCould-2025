@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.gaspar.items.models.ProductDto;
 
-@FeignClient(url = "localhost:9090/api/products",name = "products")
+@FeignClient(name = "products")
 public interface ProductFeignClient {
-    @GetMapping
+    @GetMapping("/api/products")
     List<ProductDto> findAll();
 
-    @GetMapping("/{id}")
+    @GetMapping("/api/products/{id}")
     ProductDto getById(@PathVariable Long id);
 }
