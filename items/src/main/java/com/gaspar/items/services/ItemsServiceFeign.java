@@ -12,7 +12,7 @@ import com.gaspar.items.models.ProductDto;
 
 import feign.FeignException;
 
-@Service
+//@Service
 public class ItemsServiceFeign implements ItemService{
 
     private final ProductFeignClient feignClient;
