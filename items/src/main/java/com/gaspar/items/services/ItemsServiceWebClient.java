@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClient.Builder;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import com.gaspar.items.models.Item;
 import com.gaspar.items.models.ProductDto;
@@ -25,7 +26,7 @@ public class ItemsServiceWebClient implements ItemService{
     @Override
     public List<Item> findAll() {
         List<ProductDto> block = client.build()
-        .get().uri("http://products/api/products")
+        .get()
         .accept(MediaType.APPLICATION_JSON)
         .retrieve()
         .bodyToFlux(ProductDto.class)
@@ -39,15 +40,19 @@ public class ItemsServiceWebClient implements ItemService{
 
     @Override
     public Optional<Item> findById(Long id, Integer qty) {
-        Map<String, Long> params = Map.of("id", id);
-        ProductDto block = client.build()
-        .get().uri("http://products/api/products/{id}",params)
-        .accept(MediaType.APPLICATION_JSON)
-        .retrieve()
-        .bodyToMono(ProductDto.class)
-        .block();
-        
-        return Optional.of(new Item(block,qty) );
+        try {
+            Map<String, Long> params = Map.of("id", id);
+            ProductDto block = client.build()
+            .get().uri("/{id}",params)
+            .accept(MediaType.APPLICATION_JSON)
+            .retrieve()
+            .bodyToMono(ProductDto.class)
+            .block();    
+            return Optional.of(new Item(block,qty) );
+        } catch (WebClientResponseException e) {
+            return Optional.empty();
+        }
+      
     }
 
 }
