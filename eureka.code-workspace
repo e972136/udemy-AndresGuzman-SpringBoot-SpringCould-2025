@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "eureka"
+		},
+		{
+			"path": "items"
+		},
+		{
+			"path": "products"
+		}
+	],
+	"settings": {}
+}
