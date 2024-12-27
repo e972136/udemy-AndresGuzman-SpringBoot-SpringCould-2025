@@ -1,0 +1,25 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ProductsApplication<products> 9001",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.gaspar.products.ProductsApplication",
+            "projectName": "products",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ProductsApplication<products> 9002",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.gaspar.products.ProductsApplication",
+            "projectName": "products",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": "-Dserver.port=9002"
+        }
+    ]
+}
