@@ -20,6 +20,17 @@
             "args": "",
             "envFile": "${workspaceFolder}/.env",
             "vmArgs": "-Dserver.port=9002"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ProductsApplication<products> 9003",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.gaspar.products.ProductsApplication",
+            "projectName": "products",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": "-Dserver.port=9003"
         }
     ]
 }
