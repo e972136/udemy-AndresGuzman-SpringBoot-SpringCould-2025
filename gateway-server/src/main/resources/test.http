@@ -1,0 +1,9 @@
+get http://localhost:8090/api/items
+
+
+####
+get http://localhost:8090/api/products
+
+
+####
+get http://localhost:9090/
