@@ -9,6 +9,11 @@ spring:
           filters:
           - PrefixPath=/api/products
           - StripPrefix=2          
+          - name: SampleCookie
+            args:
+              message: Mensaje personalizado de producto
+              name: user
+              value: Gashpar
         - id: items
           uri: lb://items
           predicates:
