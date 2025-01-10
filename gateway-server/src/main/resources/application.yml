@@ -20,3 +20,7 @@ spring:
           - Path=/api/items/**
           filters:
           - StripPrefix=2
+          - AddRequestHeader=patito_request,algo
+          - AddResponseHeader=patito-response,otro
+          - AddRequestParameter=desde_gateway, Gashpar
+          - SetResponseHeader=Content-Type, text/plain
