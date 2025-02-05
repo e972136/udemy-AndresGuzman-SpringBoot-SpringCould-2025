@@ -1,5 +1,10 @@
 # udemy andres guzman
 
+# Orden inicio
+* Gateway
+* Eureka
+* Servicios
+
 # urls
 * http://localhost:9001/api/products
 * http://localhost:9002/api/products

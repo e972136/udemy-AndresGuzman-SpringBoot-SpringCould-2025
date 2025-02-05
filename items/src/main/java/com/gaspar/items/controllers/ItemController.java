@@ -2,6 +2,8 @@ package com.gaspar.items.controllers;
 
 import static java.util.Objects.isNull;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -9,6 +11,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gaspar.items.models.Item;
+import com.gaspar.items.models.ProductDto;
 import com.gaspar.items.services.ItemService;
 
 @RestController
@@ -25,9 +29,14 @@ public class ItemController {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     private final ItemService itemService;
+    private final CircuitBreakerFactory CBfactory;
 
-    public ItemController(@Qualifier("itemsServiceWebClient") ItemService itemService) {
+    public ItemController(
+        @Qualifier("itemsServiceWebClient") ItemService itemService,
+        CircuitBreakerFactory CBfactory
+    ) {
         this.itemService = itemService;
+        this.CBfactory = CBfactory;
     }
 
     @GetMapping
@@ -45,7 +54,13 @@ public class ItemController {
         @PathVariable Long id,
         @PathVariable Integer qty
     ){        
-        Optional<Item> byId = itemService.findById(id,qty);
+        Optional<Item> byId = CBfactory.create("items")
+                                .run(()-> itemService.findById(id,qty),e->{                                    
+                                    log.error("Patito: Problema con el codigo,\n"+e.getMessage());
+                                    Item item = new Item(new ProductDto(0L, "", BigDecimal.ZERO, "0000", LocalDate.now()), 0);
+                                    return Optional.of(item);
+                                });  
+        
         if(byId.isEmpty()){
             //return ResponseEntity.notFound().build();
             return ResponseEntity.status(404).body(Map.of("message","Not Found"));

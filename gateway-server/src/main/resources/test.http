@@ -5,5 +5,16 @@ get http://localhost:8090/api/items
 get http://localhost:8090/api/products
 
 
-####
+#### deste items
 get http://localhost:9090/
+
+#### desde items error 7 error de tiempo
+get http://localhost:9090/7/1
+
+
+#### desde items error 10 con illegalstate
+get http://localhost:9090/10/1
+
+
+#### desde items normal
+get http://localhost:9090/2/1

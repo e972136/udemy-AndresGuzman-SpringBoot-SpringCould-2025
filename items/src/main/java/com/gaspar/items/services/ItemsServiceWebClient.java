@@ -40,7 +40,7 @@ public class ItemsServiceWebClient implements ItemService{
 
     @Override
     public Optional<Item> findById(Long id, Integer qty) {
-        try {
+        //try {
             Map<String, Long> params = Map.of("id", id);
             ProductDto block = client.build()
             .get().uri("/{id}",params)
@@ -49,9 +49,9 @@ public class ItemsServiceWebClient implements ItemService{
             .bodyToMono(ProductDto.class)
             .block();    
             return Optional.of(new Item(block,qty) );
-        } catch (WebClientResponseException e) {
-            return Optional.empty();
-        }
+        //} catch (WebClientResponseException e) {
+       //     return Optional.empty();
+       // }
       
     }
 

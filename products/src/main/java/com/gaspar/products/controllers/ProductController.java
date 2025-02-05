@@ -7,6 +7,7 @@ import com.gaspar.products.services.ProductService;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +32,15 @@ public class ProductController {
     
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> detail(@PathVariable Long id){
+    public ResponseEntity<Product> detail(@PathVariable Long id) throws InterruptedException{
+        //Simular Error
+        if(id.equals(10L)){
+            throw new IllegalStateException("Producto no encontrado");
+        }
+        //Simula tiempo de espera
+        if(id.equals(7L)){
+            TimeUnit.SECONDS.sleep(10l);
+        }
         Optional<Product> byId = productService.findById(id);
         if(byId.isPresent()){
             return ResponseEntity.ok(byId.get()) ;
